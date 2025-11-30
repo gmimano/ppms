@@ -30,16 +30,28 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+# Define shared and tenant-specific apps
+SHARED_APPS = [
+    'django_tenants',  # Mandatory
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # Add other shared apps here (e.g., the 'tenants' app we will create)
+    'tenants',
 ]
 
+TENANT_APPS = [
+    # Add your tenant-specific apps here (e.g., the 'core' app we will create)
+]
+
+INSTALLED_APPS = SHARED_APPS + TENANT_APPS
+
+
 MIDDLEWARE = [
+    "django_tenants.middleware.main.TenantMainMiddleware",  # Must be first
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -80,7 +92,7 @@ WSGI_APPLICATION = "ppms.wsgi.application"
 # }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django_tenants.postgresql_backend',
         'NAME': 'ppms',
         'USER': 'ppms',
         'PASSWORD': 'k3ester4',
@@ -88,6 +100,12 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+#Django tenants settings
+DATABASE_ROUTERS = ('django_tenants.routers.TenantSyncRouter',)
+
+TENANT_MODEL = "tenants.Client"  # app.Model
+TENANT_DOMAIN_MODEL = "tenants.Domain"  # app.Model
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

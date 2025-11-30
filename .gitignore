@@ -207,6 +207,4 @@ marimo/_lsp/
 __marimo__/
 
 .idea/
-# Local development directory
-dev/
-ppms/settings.py
+.gemini/
