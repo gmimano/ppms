@@ -3,8 +3,8 @@
 This plan outlines the steps to build the SiasaCloud platform as specified in the Technical Design Document (`TDD.md`).
 
 ## Phase 1: Project Setup & Tenant Architecture
-- [ ] Initialize the Django project named `ppms`.
-- [ ] Integrate and configure the `django-tenants` library for schema-based multi-tenancy.
+- [x] Initialize the Django project named `ppms`.
+- [x] Integrate and configure the `django-tenants` library for schema-based multi-tenancy.
 - [ ] Create a `tenants` app to manage shared models (Client/Tenant, Domain).
 - [ ] Create the `Client` (Tenant) model in the `tenants` app with fields for party name, schema name, colors, and logo.
 - [ ] Create a `core` app for the tenant-specific application logic.
